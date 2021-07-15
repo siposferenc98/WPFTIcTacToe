@@ -1,0 +1,66 @@
+﻿<Window x:Class="Gui.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Gui"
+        mc:Ignorable="d"
+        WindowStartupLocation="Manual" Left="15" Top="15"
+        Title="TestingWindow" MinHeight="400" Height="400" MaxHeight="500"  MinWidth="350" Width="450" MaxWidth="650" >
+    <Grid Margin="10,0,10,10">
+        <Grid.RowDefinitions>
+            
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+
+
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+
+        <DockPanel>
+            <Image Source="/tictactoe.png" Width="20px"></Image>
+            <Menu DockPanel.Dock="Top">
+                <MenuItem Header="File">
+                    <MenuItem Header="Betöltés"></MenuItem>
+                    <MenuItem Header="Lementés"></MenuItem>
+                </MenuItem>
+            </Menu>
+        </DockPanel>
+        <Label Grid.ColumnSpan="2" HorizontalAlignment="Center" Grid.Row="1">Tic-Tac-Toe</Label>
+        <StackPanel Grid.Row="2" Grid.Column="0">
+            <Label HorizontalAlignment="Center">Mivel szeretnél lenni?</Label>
+            <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Center" >
+                <RadioButton x:Name="xButton" Grid.Column="1" Grid.Row="0" Content="X" Margin="5px"></RadioButton>
+                <RadioButton x:Name="oButton" Grid.Column="1" Grid.Row="0" Content="O" Margin="5px"></RadioButton>
+            </StackPanel>
+            <Label HorizontalAlignment="Center">Játékos vagy gép ellen?</Label>
+            <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Center" >
+                <RadioButton x:Name="jatekos" Grid.Column="1" Grid.Row="0" Content="Játékos" Margin="5px"></RadioButton>
+                <RadioButton x:Name="gep" Grid.Column="1" Grid.Row="0" Content="Gép" Margin="5px"></RadioButton>
+            </StackPanel>
+            <Label HorizontalAlignment="Center">Elsőnek szeretnél kezdeni?</Label>
+            <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Center">
+                <RadioButton x:Name="elso" HorizontalAlignment="Center" Content="Igen" Margin="5px"></RadioButton>
+                <RadioButton HorizontalAlignment="Center" Content="Nem" Margin="5px"></RadioButton>
+            </StackPanel>
+            <Label HorizontalAlignment="Center">Mentések:</Label>
+            <ListBox x:Name="mentesek" Height="70px" Margin="10px" ></ListBox>
+            <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button Width="100" Click="mentesBetolt" Margin="5px">Betölt</Button>
+                <Button Width="100" Margin="5px">Töröl</Button>
+            </StackPanel>
+
+
+        </StackPanel>
+        
+        
+        
+        <Button Grid.Row="4" Grid.Column="0" Click="NextWindow" Grid.ColumnSpan="2">Indít!</Button>
+
+    </Grid>
+</Window>
