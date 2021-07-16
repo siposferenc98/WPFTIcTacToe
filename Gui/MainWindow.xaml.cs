@@ -20,7 +20,7 @@ namespace Gui
     /// </summary>
     public partial class MainWindow : Window
     {
-        private static bool defaultTabla = true;
+        
         
         public MainWindow()
         {
@@ -50,7 +50,7 @@ namespace Gui
             else
                 Table.p1Kovetkezik = false;
 
-            if (defaultTabla)
+            if (Table.defaultTabla)
             {
                 char[,] tabla =
                 {
@@ -75,7 +75,7 @@ namespace Gui
             {
                 int index = mentesek.SelectedIndex;
                 Table.aktualisJatszma = Table.mentesek[index].getTabla();
-                defaultTabla = false;
+                Table.defaultTabla = false;
                 MessageBox.Show(Table.aktualisJatszma.Count().ToString());
                 
             }

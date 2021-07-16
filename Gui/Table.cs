@@ -12,6 +12,8 @@ namespace Gui
         public static bool p1Kovetkezik;
         public static List<mentettJatszmak> mentesek = new List<mentettJatszmak>();
         public static List<char[,]> aktualisJatszma = new List<char[,]>();
+        public static bool defaultTabla = true;
+
 
     }
     

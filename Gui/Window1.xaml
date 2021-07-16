@@ -22,20 +22,20 @@
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
         <Label FontSize="20px" HorizontalAlignment="Center" Grid.Column="1" x:Name="kovetkezik"></Label>
-        <Button Grid.Column="0" Grid.Row="1"  Click="Button_Click" FontSize="50"></Button>
-        <Button Grid.Column="1" Grid.Row="1"  Click="Button_Click" FontSize="50"></Button>
-        <Button Grid.Column="2" Grid.Row="1"  Click="Button_Click" FontSize="50"></Button>
-        <Button Grid.Column="0" Grid.Row="2"  Click="Button_Click" FontSize="50"></Button>
-        <Button Grid.Column="1" Grid.Row="2"  Click="Button_Click" FontSize="50"></Button>
-        <Button Grid.Column="2" Grid.Row="2"  Click="Button_Click" FontSize="50"></Button>
-        <Button Grid.Column="0" Grid.Row="3"  Click="Button_Click" FontSize="50"></Button>
-        <Button Grid.Column="1" Grid.Row="3"  Click="Button_Click" FontSize="50"></Button>
-        <Button Grid.Column="2" Grid.Row="3"  Click="Button_Click" FontSize="50"></Button>
+        <Button Grid.Column="0" Grid.Row="1"  Click="Button_Click" FontSize="50" x:Name="EE"></Button>
+        <Button Grid.Column="1" Grid.Row="1"  Click="Button_Click" FontSize="50" x:Name="EK"></Button>
+        <Button Grid.Column="2" Grid.Row="1"  Click="Button_Click" FontSize="50" x:Name="EH"></Button>
+        <Button Grid.Column="0" Grid.Row="2"  Click="Button_Click" FontSize="50" x:Name="KE"></Button>
+        <Button Grid.Column="1" Grid.Row="2"  Click="Button_Click" FontSize="50" x:Name="KK"></Button>
+        <Button Grid.Column="2" Grid.Row="2"  Click="Button_Click" FontSize="50" x:Name="KH"></Button>
+        <Button Grid.Column="0" Grid.Row="3"  Click="Button_Click" FontSize="50" x:Name="HE"></Button>
+        <Button Grid.Column="1" Grid.Row="3"  Click="Button_Click" FontSize="50" x:Name="HK"></Button>
+        <Button Grid.Column="2" Grid.Row="3"  Click="Button_Click" FontSize="50" x:Name="HH"></Button>
 
         <Label Grid.Row="0" Grid.Column="3" FontSize="20" HorizontalAlignment="Center">Lépések:</Label>
-        <ListBox Grid.Row="1" Grid.Column="3" Grid.RowSpan="3" x:Name="history">
-            
-        </ListBox>
+        <ListBox Grid.Row="1" Grid.Column="3" Grid.RowSpan="2" x:Name="history" SelectionChanged="historyBetolt"></ListBox>
+        
+        <Button Grid.Row="3" Grid.Column="3" Height="20px" Click="historyBetolt" Width="40px">Betöltés</Button>
         
     </Grid>
     

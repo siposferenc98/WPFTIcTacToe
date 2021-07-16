@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -11,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.ComponentModel;
 
 namespace Gui
 {
@@ -41,38 +43,25 @@ namespace Gui
     /// </summary>
     public partial class Window1 : Window
     {
-        static List<List<Button>> gombok = new List<List<Button>>();
+        
         public Window1()
         {
             InitializeComponent();
             kovetkezik.Content = Table.p1Kovetkezik ? Table.p1 + " következik" : Table.p2 + " következik";
-            var itemek = mygrid.Children;
-            
-            List<Button> temp = new List<Button>();
-            foreach(var a in itemek)
-            {
-                if(a.GetType() == typeof(Button))
-                {
-                    temp.Add((Button)a);
-                }
-                if (temp.Count == 3)
-                {
-                    gombok.Add(new List<Button>(temp));
-                    temp.Clear();
-                }
-            }
-            
-            gombok[2][2].SetValue(ContentProperty, 3);
+            feltoltes();
+
         }
+
+        
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            
+
             Button a = (Button)sender;
             int sor = Grid.GetRow(a);
             int oszl = Grid.GetColumn(a);
-            
-            char[,] mostaniTabla = Table.aktualisJatszma.Last();
+
+            char[,] mostaniTabla = (char[,])Table.aktualisJatszma.Last().Clone();
             if (mostaniTabla[sor-1,oszl] == '_')
             {
 
@@ -88,7 +77,6 @@ namespace Gui
 
                 }
                 Table.aktualisJatszma.Add(mostaniTabla);
-                MessageBox.Show(Table.aktualisJatszma.Count().ToString());
                 history.Items.Add(Table.aktualisJatszma.Last());
                 kovetkezik.Content = Table.p1Kovetkezik ? Table.p2 + " következik" : Table.p1 + " következik";
                 Table.p1Kovetkezik = !Table.p1Kovetkezik;
@@ -106,7 +94,7 @@ namespace Gui
             Table.mentesek.Add(aktualis);
             
             Table.aktualisJatszma.Clear();
-            MessageBox.Show("mentesekcount= "+Table.mentesek.Last().tabla.Count().ToString());
+            
             
 
             if (Table.mentesek.Count != 0)
@@ -117,9 +105,59 @@ namespace Gui
                         ((MainWindow)Owner).mentesek.Items.Add(a.getSorszam() +" . játszma");
                 }
             }
+            Table.defaultTabla = true;
+            
             Owner.Show();
         }
 
-        
+        private void Feltolt(List<List<Button>> gombok)
+        {
+            
+            Dispatcher.Invoke(
+                () =>
+                {
+                    for(int i = 0; i < 3; i++)
+                    {
+                        for(int j = 0; j < 3; j++)
+                        {
+                            gombok[i][j].Content = Table.aktualisJatszma.Last()[i, j];
+                        }
+                    } 
+                }
+                );
+
+        }
+
+        private void feltoltes()
+        {
+            
+            Thread thread1 = new Thread(callback);
+            thread1.IsBackground = true;
+            thread1.Start();
+        }
+
+        private void callback()
+        {
+            List<List<Button>> gombok = new List<List<Button>>() { new List<Button>() { EE, EK, EH }, new List<Button>() { KE, KK, KH }, new List<Button>() { HE, HK, HH } };
+            try
+            {
+                Feltolt(gombok);
+            }
+            catch(Exception e)
+            {
+                MessageBox.Show(e.ToString());
+            }
+                
+        }
+
+        private void historyBetolt(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void historyBetolt(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }
