@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         WindowStartupLocation="CenterOwner"
         Closing="Window_Closing"
-        Title="Window1" Height="450" Width="800">
+        Title="Játék" Height="450" Width="800">
     <Grid Margin="10" x:Name="mygrid">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"></ColumnDefinition>
@@ -33,9 +33,9 @@
         <Button Grid.Column="2" Grid.Row="3"  Click="Button_Click" FontSize="50" x:Name="HH"></Button>
 
         <Label Grid.Row="0" Grid.Column="3" FontSize="20" HorizontalAlignment="Center">Lépések:</Label>
-        <ListBox Grid.Row="1" Grid.Column="3" Grid.RowSpan="2" x:Name="history" SelectionChanged="historyBetolt"></ListBox>
+        <ListBox Grid.Row="1" Grid.Column="3" Grid.RowSpan="3" x:Name="history" SelectionChanged="historyBetolt"></ListBox>
         
-        <Button Grid.Row="3" Grid.Column="3" Height="20px" Click="historyBetolt" Width="40px">Betöltés</Button>
+        
         
     </Grid>
     
