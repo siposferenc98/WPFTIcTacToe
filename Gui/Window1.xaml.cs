@@ -21,11 +21,12 @@ namespace Gui
     {
         private int sorszam;
         private char[,] tabla;
-
-        public mentettLepesek(int s, char[,] t)
+        private bool p1Kov;
+        public mentettLepesek(int s, char[,] t, bool p)
         {
             sorszam = s;
             tabla = t;
+            p1Kov = p;
         }
         public int getSorszam()
         {
@@ -35,6 +36,10 @@ namespace Gui
         {
             return tabla;
         }
+        public bool getP1()
+        {
+            return p1Kov;
+        }
 
     }
 
@@ -42,10 +47,12 @@ namespace Gui
     {
         private int sorszam;
         private List<char[,]> tabla;
-        public mentettJatszmak(int s, List<char[,]> t)
+        private List<mentettLepesek> history;
+        public mentettJatszmak(int s, List<char[,]> t, List<mentettLepesek> h)
         {
             sorszam = s;
             tabla = t;
+            history = h;
         }
 
         public int getSorszam()
@@ -56,13 +63,14 @@ namespace Gui
         {
             return tabla;
         }
+        public List<mentettLepesek> getHistory()
+        {
+            return history;
+        }
 
     }
 
-
-    /// <summary>
-    /// Interaction logic for Window1.xaml
-    /// </summary>
+    //Window1
     public partial class Window1 : Window
     {
 
@@ -73,7 +81,7 @@ namespace Gui
         {
             InitializeComponent();
             kovetkezik.Content = Table.p1Kovetkezik ? Table.p1 + " következik" : Table.p2 + " következik";
-            Table.historyList.Add(new mentettLepesek(0, Table.aktualisJatszma.First()));
+            Table.historyList.Add(new mentettLepesek(0, Table.aktualisJatszma.First(), Table.p1Kovetkezik));
             feltoltes();
             historyAdd();
 
@@ -92,7 +100,7 @@ namespace Gui
                 char[,] temp = (char[,])Table.aktualisJatszma.Last().Clone();
                 temp[geplepese.sor, geplepese.oszlop] = Table.p2;
                 Table.aktualisJatszma.Add(temp);
-                Table.historyList.Add(new mentettLepesek(Table.historyList.Count, temp));
+                Table.historyList.Add(new mentettLepesek(Table.historyList.Count, temp, Table.p1Kovetkezik));
                 feltoltes();
                 Table.p1Kovetkezik = !Table.p1Kovetkezik;
 
@@ -136,7 +144,7 @@ namespace Gui
                         Table.historyList.RemoveRange(aktualisTablaIndex, Table.historyList.Count() - aktualisTablaIndex);
                     }
                     Table.aktualisJatszma.Add(mostaniTabla);
-                    Table.historyList.Add(new mentettLepesek(Table.aktualisJatszma.Count - 1, mostaniTabla));
+                    Table.historyList.Add(new mentettLepesek(Table.aktualisJatszma.Count - 1, mostaniTabla, Table.p1Kovetkezik));
                     historyAdd();
                     changed = false;
                     kovetkezik.Content = Table.p1Kovetkezik ? Table.p2 + " következik" : Table.p1 + " következik";
@@ -178,8 +186,9 @@ namespace Gui
                             else
                             {
                                 gombok[i][j].Content = Table.aktualisJatszma[index][i, j];
+                                if(index != 0)
+                                    Table.p1Kovetkezik = !Table.historyList[index].getP1();
                             }
-
                             
                         }
                     } 
@@ -251,7 +260,7 @@ namespace Gui
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
 
-            mentettJatszmak aktualis = new mentettJatszmak(Table.mentesek.Count + 1, new List<char[,]>(Table.aktualisJatszma));
+            mentettJatszmak aktualis = new mentettJatszmak(Table.mentesek.Count + 1, new List<char[,]>(Table.aktualisJatszma), new List<mentettLepesek>(Table.historyList));
             Table.mentesek.Add(aktualis);
 
             Table.aktualisJatszma.Clear();

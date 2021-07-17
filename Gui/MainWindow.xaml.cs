@@ -38,9 +38,10 @@ namespace Gui
             {
                 int index = mentesek.SelectedIndex;
                 Table.aktualisJatszma = Table.mentesek[index].getTabla();
+                Table.historyList = Table.mentesek[index].getHistory();
                 foreach (var a in Table.aktualisJatszma)
                 {
-                    Table.historyList.Add(new mentettLepesek(Table.aktualisJatszma.IndexOf(a), a));
+                    Table.historyList.Add(new mentettLepesek(Table.aktualisJatszma.IndexOf(a), a, Table.p1Kovetkezik));
                 }
                 Table.defaultTabla = false;
                 MessageBox.Show(Table.aktualisJatszma.Count().ToString());
@@ -52,11 +53,37 @@ namespace Gui
             }
         }
 
+        private void torol(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Table.mentesek.RemoveAt(mentesek.SelectedIndex);
+                mentesek.Items.RemoveAt(mentesek.SelectedIndex);
+            }
+            catch(Exception)
+            {
+                MessageBox.Show("Nincs kiválasztva mentés!");
+            }
+            
+        }
+        private void torolall(object sender, RoutedEventArgs e)
+        {
+            Table.mentesek.Clear();
+            mentesek.Items.Clear();
+        }
+
 
         private void NextWindow(object sender, RoutedEventArgs e)
         {
+            char[,] tabla =
+                {
+                {'_','_','_'},
+                {'_','_','_'},
+                {'_','_','_'},
+                };
+
             if ((bool)xButton.IsChecked)
-            {   
+            { 
                 Table.p1 = 'X';
                 Table.p2 = 'O';
             }
@@ -76,15 +103,19 @@ namespace Gui
                 Table.p1Kovetkezik = false;
 
             if (Table.defaultTabla)
-            {
-                char[,] tabla =
-                {
-                {'_','_','_'},
-                {'_','_','_'},
-                {'_','_','_'},
-                };
                 Table.aktualisJatszma.Add(tabla);
-            }
+            else
+                try
+                {
+                    Table.mentesek.RemoveAt(mentesek.SelectedIndex);
+                }
+                catch(Exception)
+                {
+                    Table.aktualisJatszma.Clear();
+                    Table.aktualisJatszma.Add(tabla);
+                    Table.historyList.Clear();
+                }
+            
             
                
             Window window = new Window1();

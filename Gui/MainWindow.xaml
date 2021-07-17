@@ -51,8 +51,9 @@
             <Label HorizontalAlignment="Center">Mentések:</Label>
             <ListBox x:Name="mentesek" Height="70px" Margin="10px" ></ListBox>
             <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Center">
-                <Button Width="100" Click="mentesBetolt" Margin="5px">Betölt</Button>
-                <Button Width="100" Margin="5px">Töröl</Button>
+                <Button Width="100" Margin="5px" Click="mentesBetolt" >Betölt</Button>
+                <Button Width="100" Margin="5px" Click="torol">Kijelöltet töröl</Button>
+                <Button Width="100" Margin="5px" Click="torolall">Mindet töröl</Button>
             </StackPanel>
 
 
