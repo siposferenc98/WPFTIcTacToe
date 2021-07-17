@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Microsoft.Win32;
+using System.IO;
 
 namespace Gui
 {
@@ -39,12 +41,12 @@ namespace Gui
                 int index = mentesek.SelectedIndex;
                 Table.aktualisJatszma = Table.mentesek[index].getTabla();
                 Table.historyList = Table.mentesek[index].getHistory();
-                foreach (var a in Table.aktualisJatszma)
+                /*foreach (var a in Table.aktualisJatszma)
                 {
                     Table.historyList.Add(new mentettLepesek(Table.aktualisJatszma.IndexOf(a), a, Table.p1Kovetkezik));
-                }
+                }*/
                 Table.defaultTabla = false;
-                MessageBox.Show(Table.aktualisJatszma.Count().ToString());
+                MessageBox.Show("Mentés betöltve!","Betöltve!",MessageBoxButton.OK,MessageBoxImage.Exclamation);
 
             }
             catch (Exception)
@@ -124,6 +126,37 @@ namespace Gui
             Hide();
         }
 
-        
+        private void betolt(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog open = new OpenFileDialog();
+            if(open.ShowDialog() == true)
+            {
+                StreamReader sr = new StreamReader(open.FileName);
+                while(!sr.EndOfStream)
+                {
+                    char[,] temp = new char[3, 3];
+                    for(int i = 0; i < 3; i++)
+                    {
+                        List<string> sor = sr.ReadLine().Split(' ').ToList();
+                        temp[i, 0] = Convert.ToChar(sor[0]);
+                        temp[i, 1] = Convert.ToChar(sor[1]);
+                        temp[i, 2] = Convert.ToChar(sor[2]);
+
+                    }
+                    Table.aktualisJatszma.Add(temp);
+                    sr.ReadLine();
+                }
+                foreach (var a in Table.aktualisJatszma)
+                {
+                    Table.historyList.Add(new mentettLepesek(Table.aktualisJatszma.IndexOf(a), a, Table.p1Kovetkezik));
+                }
+                MessageBox.Show(Table.aktualisJatszma.Count().ToString());
+            }
+        }
+
+        private void ment(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
