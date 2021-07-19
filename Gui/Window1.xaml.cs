@@ -82,17 +82,13 @@ namespace Gui
         public Window1()
         {
             InitializeComponent();
-            kovetkezik.Content = Table.p1Kovetkezik ? Table.p1 + " következik" : Table.p2 + " következik";
+            kovetkezikContent();
             Table.historyList.Add(new mentettLepesek(0, Table.aktualisJatszma.First(), Table.p1Kovetkezik));
             feltoltes();
             historyAdd();
 
             if (Table.p1Kovetkezik == false && Table.gep)
                 AI();
-            
-            
-
-            
         }
         public void AI()
         {
@@ -105,7 +101,7 @@ namespace Gui
                 Table.historyList.Add(new mentettLepesek(Table.historyList.Count, temp, Table.p1Kovetkezik));
                 feltoltes();
                 Table.p1Kovetkezik = !Table.p1Kovetkezik;
-
+                changed = false;
                 gameOver(temp);
             }
 
@@ -117,7 +113,14 @@ namespace Gui
             Button a = (Button)sender;
             int sor = Grid.GetRow(a);
             int oszl = Grid.GetColumn(a);
-
+            if (Table.gep && changed)
+            {
+                if (Table.historyList[aktualisTablaIndex].getP1())
+                {
+                    MessageBox.Show("Ez a lépés nem módosítható!");
+                    return;
+                }
+            }
             char[,] mostaniTabla = new char[3,3];
             if(changed == false)
                  mostaniTabla = (char[,])Table.aktualisJatszma.Last().Clone();
@@ -142,22 +145,21 @@ namespace Gui
                     }
                     if(changed)
                     {
-                        Table.aktualisJatszma.RemoveRange(aktualisTablaIndex, Table.aktualisJatszma.Count() - aktualisTablaIndex);
-                        Table.historyList.RemoveRange(aktualisTablaIndex, Table.historyList.Count() - aktualisTablaIndex);
+                        Table.aktualisJatszma.RemoveRange(aktualisTablaIndex+1, Table.aktualisJatszma.Count() - aktualisTablaIndex-1);
+                        Table.historyList.RemoveRange(aktualisTablaIndex+1, Table.historyList.Count() - aktualisTablaIndex-1);
                     }
                     Table.aktualisJatszma.Add(mostaniTabla);
                     Table.historyList.Add(new mentettLepesek(Table.aktualisJatszma.Count - 1, mostaniTabla, Table.p1Kovetkezik));
-                    historyAdd();
                     changed = false;
-                    kovetkezik.Content = Table.p1Kovetkezik ? Table.p2 + " következik" : Table.p1 + " következik";
+                    historyAdd();
+                    kovetkezikContent();
                     Table.p1Kovetkezik = !Table.p1Kovetkezik;
+
                     if (Table.gep)
                     {
                         AI();
                         historyAdd();
-                    }
-                        
-                        
+                    }     
                 }
                 else
                 {
@@ -221,17 +223,43 @@ namespace Gui
                 
         }
 
+        private void kovetkezikContent(int index = -1)
+        {
+            Thread thread2 = new Thread(kovetkezikContentChange);
+            thread2.IsBackground = true;
+            thread2.Start(index);
+        }
+
+        private void kovetkezikContentChange(object index = null)
+        {
+            Dispatcher.Invoke(
+                () =>
+                {
+                    if ((int)index == -1)
+                        kovetkezik.Content = Table.historyList.Last().getP1() ? Table.p2 + " következik" : Table.p1 + " következik";
+                    else
+                        kovetkezik.Content = Table.historyList[(int)index].getP1() ? Table.p2 + " következik" : Table.p1 + " következik";
+                });
+                
+        }
+
 
         private void historyBetolt(object sender, SelectionChangedEventArgs e)
         {
             feltoltes(history.SelectedIndex);
             if (history.SelectedIndex != Table.aktualisJatszma.IndexOf(Table.aktualisJatszma.Last()))
             {
+                
                 aktualisTablaIndex = history.SelectedIndex;
                 changed = true;
+                kovetkezikContent(aktualisTablaIndex);
             }
             else
+            {
                 changed = false;
+                kovetkezikContent();
+            }
+                
         }
 
         private void historyAdd()
