@@ -21,6 +21,15 @@
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
+
+        <DockPanel>
+            <Menu DockPanel.Dock="Top">
+                <MenuItem Header="File">
+                    <MenuItem Header="Lementés" Click="ment"></MenuItem>
+                </MenuItem>
+            </Menu>
+        </DockPanel>
+
         <Label FontSize="20px" HorizontalAlignment="Center" Grid.Column="1" x:Name="kovetkezik"></Label>
         <Button Grid.Column="0" Grid.Row="1"  Click="Button_Click" FontSize="50" x:Name="EE"></Button>
         <Button Grid.Column="1" Grid.Row="1"  Click="Button_Click" FontSize="50" x:Name="EK"></Button>

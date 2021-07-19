@@ -23,11 +23,9 @@
 
 
         <DockPanel>
-            <Image Source="/tictactoe.png" Width="20px"></Image>
             <Menu DockPanel.Dock="Top">
                 <MenuItem Header="File">
                     <MenuItem Header="Betöltés" Click="betolt"></MenuItem>
-                    <MenuItem Header="Lementés" Click="ment"></MenuItem>
                 </MenuItem>
             </Menu>
         </DockPanel>

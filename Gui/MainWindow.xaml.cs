@@ -46,7 +46,7 @@ namespace Gui
                     Table.historyList.Add(new mentettLepesek(Table.aktualisJatszma.IndexOf(a), a, Table.p1Kovetkezik));
                 }*/
                 Table.defaultTabla = false;
-                MessageBox.Show("Mentés betöltve!","Betöltve!",MessageBoxButton.OK,MessageBoxImage.Exclamation);
+                MessageBox.Show("Mentés betöltve!","Betöltve!",MessageBoxButton.OK, MessageBoxImage.Information);
 
             }
             catch (Exception)
@@ -107,16 +107,22 @@ namespace Gui
             if (Table.defaultTabla)
                 Table.aktualisJatszma.Add(tabla);
             else
-                try
+            {
+                if(Table.fileBetolt == false)
                 {
-                    Table.mentesek.RemoveAt(mentesek.SelectedIndex);
-                }
-                catch(Exception)
-                {
-                    Table.aktualisJatszma.Clear();
-                    Table.aktualisJatszma.Add(tabla);
-                    Table.historyList.Clear();
-                }
+                    try
+                    {
+                        Table.mentesek.RemoveAt(mentesek.SelectedIndex);
+                    }
+                    catch (Exception)
+                    {
+                        Table.aktualisJatszma.Clear();
+                        Table.aktualisJatszma.Add(tabla);
+                        Table.historyList.Clear();
+                    }
+                }    
+            }
+               
             
             
                
@@ -128,7 +134,10 @@ namespace Gui
 
         private void betolt(object sender, RoutedEventArgs e)
         {
+            MessageBox.Show("A beolvasáshoz szükséges egy .txt fájl, space-el elválasztva 3x3-as táblákkal( X , O , _ ). Minden tábla után egy üres sort kihagyva lehet több lépést is csinálni.", "Formátum",MessageBoxButton.OK,MessageBoxImage.Exclamation);
+
             OpenFileDialog open = new OpenFileDialog();
+            open.Filter = "txt fájlok (*.txt)|*.txt";
             if(open.ShowDialog() == true)
             {
                 StreamReader sr = new StreamReader(open.FileName);
@@ -138,9 +147,9 @@ namespace Gui
                     for(int i = 0; i < 3; i++)
                     {
                         List<string> sor = sr.ReadLine().Split(' ').ToList();
-                        temp[i, 0] = Convert.ToChar(sor[0]);
-                        temp[i, 1] = Convert.ToChar(sor[1]);
-                        temp[i, 2] = Convert.ToChar(sor[2]);
+                        temp[i, 0] = Convert.ToChar(sor[0].ToUpper());
+                        temp[i, 1] = Convert.ToChar(sor[1].ToUpper());
+                        temp[i, 2] = Convert.ToChar(sor[2].ToUpper());
 
                     }
                     Table.aktualisJatszma.Add(temp);
@@ -150,13 +159,11 @@ namespace Gui
                 {
                     Table.historyList.Add(new mentettLepesek(Table.aktualisJatszma.IndexOf(a), a, Table.p1Kovetkezik));
                 }
-                MessageBox.Show(Table.aktualisJatszma.Count().ToString());
+                Table.defaultTabla = false;
+                Table.fileBetolt = true;
+                MessageBox.Show("Fájl beolvasás sikeres!","",MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }
 
-        private void ment(object sender, RoutedEventArgs e)
-        {
-
-        }
     }
 }

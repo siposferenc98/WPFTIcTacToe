@@ -15,6 +15,7 @@ namespace Gui
         public static List<mentettLepesek> historyList = new List<mentettLepesek>();
         public static bool defaultTabla = true;
         public static bool gep = false;
+        public static bool fileBetolt = false;
 
         public static int nyerolehetosegek(char[,] tabla)
         {

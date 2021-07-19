@@ -13,6 +13,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.ComponentModel;
+using Microsoft.Win32;
+using System.IO;
 
 namespace Gui
 {
@@ -255,6 +257,27 @@ namespace Gui
                 MessageBox.Show("Döntetlen!");
         }
 
+        private void ment(object sender, RoutedEventArgs e)
+        {
+            SaveFileDialog save = new SaveFileDialog();
+            save.Filter = "txt fájlok (*.txt)|*.txt";
+            if (save.ShowDialog() == true)
+            {
+                StreamWriter sw = new StreamWriter(save.FileName);
+                foreach (char[,] a in Table.aktualisJatszma)
+                {
+                    for (int i = 0; i < 3; i++)
+                    {
+                        string sor = a[i, 0].ToString() + " " + a[i, 1].ToString() + " " + a[i, 2].ToString();
+                        sw.WriteLine(sor);
+                    }
+                    sw.WriteLine();
+                }
+                sw.Close();
+            }
+            MessageBox.Show($"Fájl lementése sikeres! A fájl helye: {save.FileName}");
+        }
+
 
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -276,7 +299,7 @@ namespace Gui
                 }
             }
             Table.defaultTabla = true;
-
+            Table.fileBetolt = false;
             Owner.Show();
         }
 
