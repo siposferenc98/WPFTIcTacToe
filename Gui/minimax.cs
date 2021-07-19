@@ -84,7 +84,6 @@ namespace Gui
                         (int, int) eredmeny = minimax(t, 0, true);
                         int lepesertek = eredmeny.Item1;
                         int melyseg = eredmeny.Item2;
-                        //Console.WriteLine("lépésérték"+lepesertek);
 
                         t[i, j] = '_';
 
@@ -110,7 +109,6 @@ namespace Gui
                     }
                 }
             }
-            //Console.WriteLine("Legjobbertek = "+legjobbertek);
 
             return legjobb;
         }
