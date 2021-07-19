@@ -165,5 +165,11 @@ namespace Gui
             }
         }
 
+        private void help(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("-A lenti dobozba mentett játékok fognak kerülni, egy játék bezárásánál automatikusan hozzá fog adódni.\n\n"+
+                "-A főablakban a fenti file menüben betölteni tudsz .txt formátumú játékokat, bővebb leírást előtte kapni fogsz, ezután az Indít gomb ezt a játékot fogja elindítani.\n\n" + 
+                "-Egy új játék indítása után a fenti file menüből le tudod menteni az aktuális játékodat, minden lépésével együtt(amit később be tudsz velük együtt tölteni).\n\n" + "-Játék közben az ablak jobb oldalán tárolva lesznek az előző lépések, ha rákattintasz egy-egy lépésre meg tudod nézni, és ha esetleg módosítod , akkor az azt követő lépések törlésre kerülnek.\n\n" + "-Ha a gép ellen játszol akkor az ő lépéseit nem tudod módosítani!");
+        }
     }
 }

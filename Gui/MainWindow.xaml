@@ -27,6 +27,7 @@
                 <MenuItem Header="File">
                     <MenuItem Header="Betöltés" Click="betolt"></MenuItem>
                 </MenuItem>
+                <MenuItem Header="Leírás" Click="help"></MenuItem>
             </Menu>
         </DockPanel>
         <Label Grid.ColumnSpan="2" HorizontalAlignment="Center" Grid.Row="1">Tic-Tac-Toe</Label>
