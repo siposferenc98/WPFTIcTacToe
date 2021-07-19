@@ -150,8 +150,9 @@ namespace Gui
                     }
                     Table.aktualisJatszma.Add(mostaniTabla);
                     Table.historyList.Add(new mentettLepesek(Table.aktualisJatszma.Count - 1, mostaniTabla, Table.p1Kovetkezik));
-                    changed = false;
+                    
                     historyAdd();
+                    changed = false;
                     kovetkezikContent();
                     Table.p1Kovetkezik = !Table.p1Kovetkezik;
 
